@@ -23,5 +23,5 @@ private fun getMap(): Map<Int, Int> {
             .split(Regex("\\s+"))
             .map(String::toInt)
     }
-        .associate { Pair(it[0], it[1]) }
+        .associate { it[0] to it[1] }
 }
