@@ -8,7 +8,7 @@ fun redNosedReports1(): Int {
             if (report[0] < report[1]) report = report.reversed()
 
             report.windowed(2)
-                .all { window -> window[0] - window[1] in 1..3 }
+                .all { (first, second) -> first - second in 1..3 }
         }
 }
 
@@ -19,19 +19,17 @@ fun redNosedReports2(): Int {
                 .split(Regex("\\s+"))
                 .map(String::toInt)
 
-            val allPossibleReports = mutableListOf<List<Int>>()
-            for (i in initialReport.indices) {
-                val report = buildList {
+            val reports: List<List<Int>> = initialReport.indices.map { i ->
+                buildList {
                     addAll(initialReport.subList(0, i))
                     addAll(initialReport.subList(i + 1, initialReport.size))
                 }
-                allPossibleReports.add(report)
-                allPossibleReports.add(report.reversed())
+                    .let { report -> if (report[0] < report[1]) report.reversed() else report }
             }
 
-            allPossibleReports.any { report ->
+            reports.any { report ->
                 report.windowed(2)
-                    .all { window -> window[0] - window[1] in 1..3 }
+                    .all { (first, second) -> first - second in 1..3 }
             }
         }
 }
